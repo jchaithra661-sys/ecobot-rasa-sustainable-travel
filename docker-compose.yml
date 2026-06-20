@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+
+  rasa:
+    image: rasa/rasa:3.6.0-full
+    container_name: ecobot_rasa
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./:/app
+    command: run --enable-api --cors "*" --debug
+    env_file: .env
+    depends_on:
+      - action_server
+    networks:
+      - ecobot_net
+
+  action_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.actions
+    container_name: ecobot_actions
+    ports:
+      - "5055:5055"   # internal only; not exposed to internet
+    volumes:
+      - ./actions:/app/actions
+      - ./handover_log.json:/app/handover_log.json
+    env_file: .env
+    networks:
+      - ecobot_net
+
+  frontend:
+    image: nginx:alpine
+    container_name: ecobot_frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    networks:
+      - ecobot_net
+
+networks:
+  ecobot_net:
+    driver: bridge

@@ -1,0 +1,170 @@
+# EcoBot – Domain Configuration
+
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - inform_destination
+  - inform_dates
+  - inform_budget
+  - inform_sustainability_preference
+  - inform_transport_mode
+  - request_carbon_info
+  - request_hotel_options
+  - request_escalation
+  - affirm
+  - deny
+  - out_of_scope
+
+entities:
+  - destination
+  - departure_city
+  - travel_start_date
+  - travel_end_date
+  - budget_value
+  - transport_mode
+  - sustainability_level
+
+slots:
+  destination:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: destination
+  departure_city:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: departure_city
+  travel_dates:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+  budget:
+    type: float
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: budget_value
+  sustainability_level:
+    type: categorical
+    values:
+      - low
+      - medium
+      - high
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: sustainability_level
+  transport_mode:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: transport_mode
+  fallback_count:
+    type: float
+    initial_value: 0
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+responses:
+  utter_greet:
+    - text: "Hello! I'm EcoBot, your sustainable travel advisor. 🌿 I can help you plan eco-friendly trips with real carbon footprint data. Where would you like to go?"
+      buttons:
+        - title: "Plan a trip"
+          payload: "/greet"
+        - title: "Compare carbon footprints"
+          payload: "/request_carbon_info"
+
+  utter_ask_departure:
+    - text: "Great! Where are you travelling from?"
+      buttons:
+        - title: "London"
+          payload: '/inform_destination{"departure_city": "London"}'
+        - title: "Berlin"
+          payload: '/inform_destination{"departure_city": "Berlin"}'
+        - title: "Paris"
+          payload: '/inform_destination{"departure_city": "Paris"}'
+        - title: "Type a city"
+          payload: "/inform_destination"
+
+  utter_ask_destination:
+    - text: "And where would you like to travel to?"
+      buttons:
+        - title: "Amsterdam"
+          payload: '/inform_destination{"destination": "Amsterdam"}'
+        - title: "Lisbon"
+          payload: '/inform_destination{"destination": "Lisbon"}'
+        - title: "Copenhagen"
+          payload: '/inform_destination{"destination": "Copenhagen"}'
+        - title: "Costa Rica"
+          payload: '/inform_destination{"destination": "Costa Rica"}'
+
+  utter_ask_dates:
+    - text: "What are your travel dates? (e.g. '15 July to 20 July')"
+
+  utter_ask_budget:
+    - text: "What is your approximate budget per person (in EUR)?"
+      buttons:
+        - title: "Under €500"
+          payload: '/inform_budget{"budget_value": 500}'
+        - title: "€500–€1000"
+          payload: '/inform_budget{"budget_value": 750}'
+        - title: "Over €1000"
+          payload: '/inform_budget{"budget_value": 1500}'
+
+  utter_ask_sustainability:
+    - text: "How important is sustainability to you for this trip?"
+      buttons:
+        - title: "Low – just show me options"
+          payload: '/inform_sustainability_preference{"sustainability_level": "low"}'
+        - title: "Medium – I prefer greener options"
+          payload: '/inform_sustainability_preference{"sustainability_level": "medium"}'
+        - title: "High – sustainability is my priority"
+          payload: '/inform_sustainability_preference{"sustainability_level": "high"}'
+
+  utter_ask_transport:
+    - text: "How would you prefer to travel?"
+      buttons:
+        - title: "Train 🚂"
+          payload: '/inform_transport_mode{"transport_mode": "train"}'
+        - title: "Coach 🚌"
+          payload: '/inform_transport_mode{"transport_mode": "coach"}'
+        - title: "Flight ✈️"
+          payload: '/inform_transport_mode{"transport_mode": "plane"}'
+
+  utter_goodbye:
+    - text: "Safe and sustainable travels! 🌍 Come back whenever you need eco-friendly travel advice."
+
+  utter_out_of_scope:
+    - text: "I'm specialised in sustainable travel planning. I can help you with destinations, carbon footprints, eco-hotels, or green transport options."
+
+  utter_clarify_stage1:
+    - text: "I didn't quite catch that. Did you mean one of these?"
+      buttons:
+        - title: "Plan a trip"
+          payload: "/greet"
+        - title: "Calculate carbon footprint"
+          payload: "/request_carbon_info"
+        - title: "Find eco-hotels"
+          payload: "/request_hotel_options"
+
+  utter_handover_message:
+    - text: "Connecting you to a sustainable travel specialist... 🔄 They will have the full context of our conversation."
+
+actions:
+  - action_calculate_carbon
+  - action_fetch_travel_options
+  - action_rank_and_recommend
+  - action_handover_to_human
+  - action_reset_fallback_count
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: false

@@ -1,0 +1,6 @@
+.env
+*.pyc
+__pycache__/
+models/
+.rasa/
+handover_log.json
