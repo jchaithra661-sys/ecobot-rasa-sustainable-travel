@@ -1,7 +1,7 @@
 # EcoBot – Eco-Travel Advisor Chatbot (Rasa)
 
 **MSc in Artificial Intelligence | BSBI / UCA | 2026**
-**Author:** Chaithra Jaganath
+Chaithra Jaganath
 
 A conversational agent for sustainable tourism planning built on the Rasa Open Source platform.
 
