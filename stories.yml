@@ -1,0 +1,157 @@
+# EcoBot – Dialogue Stories
+
+version: "3.1"
+
+stories:
+
+  # ── HAPPY PATH 1: City Break ─────────────────────────────────────────────
+  - story: city break happy path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inform_destination
+        entities:
+          - departure_city: "London"
+      - action: utter_ask_destination
+      - intent: inform_destination
+        entities:
+          - destination: "Amsterdam"
+      - action: utter_ask_dates
+      - intent: inform_dates
+      - action: utter_ask_budget
+      - intent: inform_budget
+        entities:
+          - budget_value: 800
+      - action: utter_ask_sustainability
+      - intent: inform_sustainability_preference
+        entities:
+          - sustainability_level: "high"
+      - action: utter_ask_transport
+      - intent: inform_transport_mode
+        entities:
+          - transport_mode: "train"
+      - action: action_calculate_carbon
+      - action: action_fetch_travel_options
+      - action: action_rank_and_recommend
+
+  # ── HAPPY PATH 2: Eco-Tour ───────────────────────────────────────────────
+  - story: eco-tour happy path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inform_destination
+        entities:
+          - departure_city: "Berlin"
+          - destination: "Costa Rica"
+      - action: utter_ask_dates
+      - intent: inform_dates
+      - action: utter_ask_budget
+      - intent: inform_budget
+        entities:
+          - budget_value: 2000
+      - action: utter_ask_sustainability
+      - intent: inform_sustainability_preference
+        entities:
+          - sustainability_level: "high"
+      - action: utter_ask_transport
+      - intent: inform_transport_mode
+        entities:
+          - transport_mode: "plane"
+      - action: action_calculate_carbon
+      - action: action_fetch_travel_options
+      - action: action_rank_and_recommend
+
+  # ── HAPPY PATH 3: Business Trip ──────────────────────────────────────────
+  - story: carbon neutral business trip
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inform_destination
+        entities:
+          - departure_city: "Paris"
+          - destination: "Brussels"
+      - action: utter_ask_dates
+      - intent: inform_dates
+      - action: utter_ask_budget
+      - intent: inform_budget
+        entities:
+          - budget_value: 500
+      - action: utter_ask_sustainability
+      - intent: inform_sustainability_preference
+        entities:
+          - sustainability_level: "medium"
+      - action: utter_ask_transport
+      - intent: inform_transport_mode
+        entities:
+          - transport_mode: "train"
+      - action: action_calculate_carbon
+      - action: action_fetch_travel_options
+      - action: action_rank_and_recommend
+
+  # ── EDGE CASE: User requests carbon info directly ────────────────────────
+  - story: direct carbon request
+    steps:
+      - intent: request_carbon_info
+      - action: utter_ask_departure
+      - intent: inform_destination
+        entities:
+          - departure_city: "London"
+      - action: utter_ask_destination
+      - intent: inform_destination
+        entities:
+          - destination: "Amsterdam"
+      - action: utter_ask_transport
+      - intent: inform_transport_mode
+        entities:
+          - transport_mode: "train"
+      - action: action_calculate_carbon
+
+  # ── EDGE CASE: No budget stated ──────────────────────────────────────────
+  - story: no budget stated
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inform_destination
+        entities:
+          - departure_city: "London"
+          - destination: "Amsterdam"
+      - action: utter_ask_dates
+      - intent: inform_dates
+      - action: utter_ask_budget
+      - intent: deny
+      - action: utter_ask_sustainability
+      - intent: inform_sustainability_preference
+        entities:
+          - sustainability_level: "medium"
+      - action: utter_ask_transport
+      - intent: inform_transport_mode
+        entities:
+          - transport_mode: "train"
+      - action: action_calculate_carbon
+      - action: action_fetch_travel_options
+      - action: action_rank_and_recommend
+
+  # ── EDGE CASE: User escalates mid-flow ───────────────────────────────────
+  - story: escalation mid-flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: inform_destination
+        entities:
+          - destination: "Tokyo"
+      - action: utter_ask_departure
+      - intent: request_escalation
+      - action: action_handover_to_human
+
+  # ── FALLBACK CLARIFICATION FLOW ──────────────────────────────────────────
+  - story: fallback then clarify then continue
+    steps:
+      - intent: out_of_scope
+      - action: utter_clarify_stage1
+      - intent: greet
+      - action: utter_greet
+
+  - story: goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye

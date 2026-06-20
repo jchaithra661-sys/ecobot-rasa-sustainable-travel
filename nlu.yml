@@ -1,0 +1,194 @@
+# EcoBot – NLU Training Data
+# Each intent has 15-20 base examples + paraphrase augmentation (30-40 total)
+
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hi
+      - hello
+      - hey
+      - good morning
+      - good afternoon
+      - howdy
+      - hi there
+      - hello there
+      - hey EcoBot
+      - greetings
+      - what's up
+      - yo
+      - start
+      - help me plan a trip
+      - I want to plan a trip
+      - I need travel advice
+      - can you help me travel sustainably
+      - I want eco-friendly travel help
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+      - thanks, bye
+      - that's all for now
+      - I'm done
+      - exit
+      - quit
+      - no more questions
+      - thank you and bye
+
+  - intent: inform_destination
+    examples: |
+      - I want to go to [Amsterdam](destination)
+      - my destination is [Lisbon](destination)
+      - I'm travelling to [Copenhagen](destination)
+      - take me to [Costa Rica](destination)
+      - I'd like to visit [Barcelona](destination)
+      - [Rome](destination) please
+      - I'm heading to [Tokyo](destination)
+      - [Edinburgh](destination)
+      - I want to travel to [Vienna](destination)
+      - going to [Prague](destination)
+      - from [London](departure_city)
+      - I'm leaving from [Berlin](departure_city)
+      - departing from [Paris](departure_city)
+      - starting in [Madrid](departure_city)
+      - I'm based in [Amsterdam](departure_city)
+      - from [London](departure_city) to [Amsterdam](destination)
+      - travelling from [Berlin](departure_city) to [Lisbon](destination)
+      - [Paris](departure_city) to [Rome](destination)
+
+  - intent: inform_dates
+    examples: |
+      - from [15 July](travel_start_date) to [20 July](travel_end_date)
+      - [1 August](travel_start_date) until [8 August](travel_end_date)
+      - I'll be going [next weekend](travel_start_date)
+      - [14th June](travel_start_date) for a week
+      - [3 days](travel_start_date) in September
+      - [20 July to 25 July](travel_start_date)
+      - leaving [next Friday](travel_start_date) returning [Sunday](travel_end_date)
+      - [Christmas week](travel_start_date)
+      - [summer holidays](travel_start_date)
+      - [5 nights](travel_start_date) starting [1st September](travel_start_date)
+
+  - intent: inform_budget
+    examples: |
+      - my budget is [500](budget_value) euros
+      - I can spend around [£800](budget_value)
+      - [1000](budget_value) EUR
+      - under [€600](budget_value) per person
+      - about [750](budget_value) pounds
+      - no more than [500](budget_value)
+      - I have [2000](budget_value) to spend
+      - maximum [300](budget_value)
+      - roughly [1500](budget_value)
+      - budget of [400](budget_value) euros
+
+  - intent: inform_sustainability_preference
+    examples: |
+      - [high](sustainability_level) sustainability please
+      - I want the most [eco-friendly](sustainability_level) options
+      - [low](sustainability_level) priority on green
+      - [medium](sustainability_level) – I prefer greener but not essential
+      - sustainability is very important to me
+      - I care a lot about the environment
+      - just show me cheap options
+      - I want to minimise my carbon footprint
+      - [green](sustainability_level) travel is my priority
+      - I'm not too bothered about eco credentials
+
+  - intent: inform_transport_mode
+    examples: |
+      - I want to travel by [train](transport_mode)
+      - [plane](transport_mode) please
+      - [flight](transport_mode)
+      - by [coach](transport_mode)
+      - [Eurostar](transport_mode)
+      - I prefer [rail](transport_mode)
+      - I'll be [flying](transport_mode)
+      - [bus](transport_mode) or [coach](transport_mode)
+      - [car](transport_mode) is fine
+      - I want to avoid flying
+
+  - intent: request_carbon_info
+    examples: |
+      - what is the carbon footprint of flying to Amsterdam?
+      - how much CO2 does a train emit?
+      - carbon emissions for this trip
+      - compare the carbon footprint of train vs flight
+      - how eco-friendly is flying?
+      - what's the environmental impact?
+      - show me the carbon data
+      - CO2 emissions
+      - which option is most carbon neutral?
+      - how many kg of CO2 per person?
+      - what's the greenest way to travel?
+      - carbon calculator
+
+  - intent: request_hotel_options
+    examples: |
+      - show me eco hotels
+      - I need a sustainable place to stay
+      - find me green accommodation
+      - GSTC certified hotels
+      - eco-certified hotels in Amsterdam
+      - sustainable accommodation options
+      - find me a hotel with green credentials
+      - what are the most eco-friendly hotels?
+      - show me accommodation
+      - I need somewhere to stay
+
+  - intent: request_escalation
+    examples: |
+      - I need to speak to a human
+      - connect me to a travel agent
+      - can I talk to someone?
+      - I need specialist advice
+      - this is complicated, I need a person
+      - escalate to a human
+      - speak to a travel advisor
+      - I want a real person
+      - transfer me to an agent
+      - I need personalised help
+
+  - intent: affirm
+    examples: |
+      - yes
+      - yeah
+      - yep
+      - sure
+      - of course
+      - that's right
+      - correct
+      - absolutely
+      - definitely
+      - sounds good
+      - ok
+      - great
+      - perfect
+      - that works
+
+  - intent: deny
+    examples: |
+      - no
+      - nope
+      - not really
+      - that's not right
+      - no thanks
+      - I don't think so
+      - negative
+      - not quite
+      - that's wrong
+      - change it
+
+  - intent: out_of_scope
+    examples: |
+      - what's the weather like?
+      - book me a restaurant
+      - tell me a joke
+      - what time is it?
+      - translate this for me
+      - who won the football?
+      - what is 2+2?
+      - play some music
